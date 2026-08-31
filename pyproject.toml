@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "port-scanner"
+version = "0.1.0"
+description = "A CLI port scanner"
+requires-python = ">=3.10"
+
+[project.scripts]
+task-cli = "src.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
