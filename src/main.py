@@ -1,6 +1,6 @@
 import socket
-import parser as parser
-import output as output
+import parser
+from output import output
 
 def check_port(host: str, port: int, timeout: float) -> str:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -18,27 +18,28 @@ def check_port(host: str, port: int, timeout: float) -> str:
 
 def main() -> None:
     ports: list[int] = []
-    range_start = 0
-    range_end = 0
+    range_start = None
+    range_end = None
+
+    result: dict[int, str] = {}
 
     args = parser.parse_input()
-    host = args.host
-    timeout = args.timeout
 
-    if args.ports != "0":
+    if args.ports != "":
         ports = parser.get_ports(args.ports)
-    elif args.range != "0-0":
+    elif args.range != "":
         range_start, range_end = parser.get_range(args.range)
     else:
         print("Invalid ports!")
 
-    print("[PORT]     [STATE]")
     if len(ports) != 0:
         for port in ports:
-            output.show(port, check_port(host, port, timeout), args.verbose)
-    elif range_start != 0 and range_end != 0:
+            result[port] = check_port(args.host, port, args.timeout)
+            output(args.output, result, args.verbose)
+    elif range_start is not None and range_end is not None:
         for port in range(range_start, range_end + 1):
-            output.show(port, check_port(host, port, timeout), args.verbose)
+            result[port] = check_port(args.host, port, args.timeout)
+            output(args.output, result, args.verbose)
 
 if __name__ == "__main__":
     main()
