@@ -35,11 +35,13 @@ def main() -> None:
     if len(ports) != 0:
         for port in ports:
             result[port] = check_port(args.host, port, args.timeout)
-            output(args.output, result, args.verbose)
+
+        output(args.output, result, args.verbose)
     elif range_start is not None and range_end is not None:
         for port in range(range_start, range_end + 1):
             result[port] = check_port(args.host, port, args.timeout)
-            output(args.output, result, args.verbose)
+
+        output(args.output, result, args.verbose)
 
 if __name__ == "__main__":
     main()
