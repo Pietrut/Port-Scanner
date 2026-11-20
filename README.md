@@ -16,13 +16,22 @@ A lightweight, multithreaded TCP port scanner written in Python. It allows users
 - Python 3.10 or newer
 - No external dependencies
 
+## Installation
+
+Clone and install the repository:
+
+```bash
+git clone https://github.com/Pietrut/Port-Scanner.git
+cd Port-Scanner
+python -m pip install -e .
+```
 
 ## Usage
 
 Run the scanner using:
 
 ```bash
-python main.py [OPTIONS]
+port-scanner [OPTIONS]
 ```
 
 ### Arguments
@@ -41,37 +50,37 @@ python main.py [OPTIONS]
 **Scan a single port:**
 
 ```bash
-python main.py --host 127.0.0.1 --ports 80
+port-scanner --host 127.0.0.1 --ports 80
 ```
 
 **Scan multiple ports:**
 
 ```bash
-python main.py --host example.com --ports "22,80,443,8080"
+port-scanner --host example.com --ports "22,80,443,8080"
 ```
 
 **Scan a port range:**
 
 ```bash
-python main.py --host 192.168.1.1 --range 1-1024
+port-scanner --host 192.168.1.1 --range 1-1024
 ```
 
 **Customize the timeout:**
 
 ```bash
-python main.py --host example.com --range 1-1000 --timeout 2.5
+port-scanner --host example.com --range 1-1000 --timeout 2.5
 ```
 
 **Save results to a file:**
 
 ```bash
-python main.py --host example.com --ports "80,443" --output results.txt
+port-scanner --host example.com --ports "80,443" --output results.txt
 ```
 
 **Enable verbose mode:**
 
 ```bash
-python main.py --host localhost --range 1-1000 --verbose
+port-scanner --host localhost --range 1-1000 --verbose
 ```
 
 ## Port State
