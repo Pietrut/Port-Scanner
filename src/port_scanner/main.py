@@ -1,6 +1,6 @@
 import socket
-import parser
-from output import output
+from port_scanner import parser
+from port_scanner.output import output
 from concurrent.futures import ThreadPoolExecutor
 
 def check_port(host: str, port: int, timeout: float) -> str:

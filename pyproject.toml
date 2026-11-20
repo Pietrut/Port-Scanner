@@ -9,7 +9,7 @@ description = "A CLI port scanner"
 requires-python = ">=3.10"
 
 [project.scripts]
-task-cli = "src.main:main"
+port-scanner = "port_scanner.main:main"
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
