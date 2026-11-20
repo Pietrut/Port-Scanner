@@ -1,6 +1,7 @@
 import socket
 import parser
 from output import output
+from concurrent.futures import ThreadPoolExecutor
 
 def check_port(host: str, port: int, timeout: float) -> str:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -18,8 +19,6 @@ def check_port(host: str, port: int, timeout: float) -> str:
 
 def main() -> None:
     ports: list[int] = []
-    range_start = None
-    range_end = None
 
     result: dict[int, str] = {}
 
@@ -29,19 +28,25 @@ def main() -> None:
         ports = parser.get_ports(args.ports)
     elif args.range != "":
         range_start, range_end = parser.get_range(args.range)
+
+        if range_start and range_end:
+            ports = list(range(range_start, range_end + 1))
+        else:
+            print("Invalid range!")
+            return
     else:
         print("Invalid ports!")
+        return
 
-    if len(ports) != 0:
-        for port in ports:
-            result[port] = check_port(args.host, port, args.timeout)
+    with ThreadPoolExecutor(max_workers=100) as executor:
+        results = executor.map(
+            lambda port: check_port(args.host, port, args.timeout),
+            ports
+        )
 
-        output(args.output, result, args.verbose)
-    elif range_start is not None and range_end is not None:
-        for port in range(range_start, range_end + 1):
-            result[port] = check_port(args.host, port, args.timeout)
+        result = dict(zip(ports, results))
 
-        output(args.output, result, args.verbose)
+    output(args.output, result, args.verbose)
 
 if __name__ == "__main__":
     main()
