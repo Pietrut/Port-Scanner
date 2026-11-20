@@ -14,6 +14,8 @@ def check_port(host: str, port: int, timeout: float) -> str:
         return "Closed"
     except TimeoutError:
         return "Timeout"
+    except OSError as e:
+        return f"Error: {e}"
     finally:
         sock.close()
 
